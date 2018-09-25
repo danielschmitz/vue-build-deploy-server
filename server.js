@@ -39,8 +39,8 @@ server.use(bodyParser.urlencoded({
 /* Cors */
 server.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH, OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Origin, authorization, X-Requested-With, Content-Type, Accept')
   next()
 })
 
@@ -59,6 +59,10 @@ server.post('/auth/login', (req, res) => {
 
 // Any route with /api was checked
 server.use('/api', (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    next()
+    return
+  }
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401
     const message = 'Bad authorization header'

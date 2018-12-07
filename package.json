@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "now-deploy": "now -p",
     "now-start": "node server.js"
   },
